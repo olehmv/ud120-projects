@@ -26,6 +26,57 @@ plt.xlabel("bumpiness")
 plt.ylabel("grade")
 plt.show()
 ################################################################################
+from time import time
+
+
+# training time: 0.062 s
+# predict time: 0.016 s
+# accuracy 0.92
+from sklearn.ensemble import AdaBoostClassifier
+t0 = time()
+clf = AdaBoostClassifier(n_estimators=30,learning_rate=2)
+clf.fit(features_train, labels_train)###
+print "training time:", round(time()-t0, 3), "s"
+t0 = time()
+pred = clf.predict(features_test)
+print "predict time:", round(time()-t0, 3), "s"
+from sklearn.metrics import accuracy_score
+accuracy = accuracy_score(pred,labels_test)
+print "accuracy", accuracy
+
+
+# training time: 0.031 s
+# predict time: 0.0 s
+# accuracy 0.94, 0.904, 0.92, 0.928, 0.924
+from sklearn.ensemble import RandomForestClassifier
+t0 = time()
+clf = RandomForestClassifier(max_depth=2)
+clf.fit(features_train, labels_train)###
+print "training time:", round(time()-t0, 3), "s"
+t0 = time()
+pred = clf.predict(features_test)
+print "predict time:", round(time()-t0, 3), "s"
+from sklearn.metrics import accuracy_score
+accuracy = accuracy_score(pred,labels_test)
+print "accuracy", accuracy
+
+
+
+# training time: 0.031 s
+# predict time: 0.0 s
+# accuracy 0.7
+from sklearn.cluster import KMeans
+t0 = time()
+clf = KMeans(n_clusters=2, precompute_distances=True).fit(features_train)
+print "training time:", round(time()-t0, 3), "s"
+t0 = time()
+pred = clf.predict(features_test)
+print "predict time:", round(time()-t0, 3), "s"
+from sklearn.metrics import accuracy_score
+accuracy = accuracy_score(pred,labels_test)
+print "accuracy", accuracy
+print "labels", clf.labels_
+print "cluster centers", clf.cluster_centers_
 
 
 ### your code here!  name your classifier object clf if you want the 
