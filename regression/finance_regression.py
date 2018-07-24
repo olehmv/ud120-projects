@@ -29,9 +29,39 @@ target, features = targetFeatureSplit( data )
 from sklearn.cross_validation import train_test_split
 feature_train, feature_test, target_train, target_test = train_test_split(features, target, test_size=0.5, random_state=42)
 train_color = "b"
-test_color = "b"
+test_color = "r"
+
+from sklearn import linear_model
+reg = linear_model.LinearRegression()
+reg.fit(feature_train,target_train)
+
+pred=reg.predict(feature_train)
 
 
+print "Score for bonus over salary", reg.score(feature_test,target_test)
+print "Slope ",reg.coef_
+print "Intercept", reg.intercept_
+
+# features_list = ["bonus", "long_term_incentive"]
+# data = featureFormat( dictionary, features_list, remove_any_zeroes=True)
+# target, features = targetFeatureSplit( data )
+#
+# ### training-testing split needed in regression, just like classification
+# from sklearn.cross_validation import train_test_split
+# feature_train, feature_test, target_train, target_test = train_test_split(features, target, test_size=0.5, random_state=42)
+# train_color = "b"
+# test_color = "r"
+#
+# from sklearn import linear_model
+# reg = linear_model.LinearRegression()
+# reg.fit(feature_train,target_train)
+#
+# pred=reg.predict(feature_train)
+#
+#
+# print "Score for bonus over long_term_incentive", reg.score(feature_test,target_test)
+# print "Slope ",reg.coef_
+# print "Intercept", reg.intercept_
 
 ### Your regression goes here!
 ### Please name it reg, so that the plotting code below picks it up and 
@@ -64,6 +94,11 @@ try:
     plt.plot( feature_test, reg.predict(feature_test) )
 except NameError:
     pass
+reg.fit(feature_test, target_test)
+plt.plot(feature_train, reg.predict(feature_train), color="b")
+print "Slope of test set",reg.coef_
+print "Intercept of test set", reg.intercept_
+
 plt.xlabel(features_list[1])
 plt.ylabel(features_list[0])
 plt.legend()
