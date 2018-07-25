@@ -64,9 +64,31 @@ plt.show()
 
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
+from sklearn.cluster import KMeans
+clf = KMeans(n_clusters=2)
+pred = clf.fit_predict( finance_features )
+Draw(pred, finance_features, poi, name="two_clusters.png", f1_name=feature_1, f2_name=feature_2)
 
+from sklearn.cluster import KMeans
+feature_3="total_payments"
+features_list = ["poi", feature_1, feature_2, feature_3]
+data2 = featureFormat(data_dict, features_list )
+poi, finance_features = targetFeatureSplit( data2 )
+clf = KMeans(n_clusters=3)
+pred = clf.fit_predict( finance_features )
+Draw(pred, finance_features, poi, name="three_clusters_before_scaling.png", f1_name=feature_1, f2_name=feature_2)
 
+features_list = ["exercised_stock_options"]
+exercised_stock_options = featureFormat(data_dict, features_list )
+import numpy as np
+print "Max exercised_stock_options", np.max(exercised_stock_options)
+print "Min exercised_stock_options", np.min(exercised_stock_options)
 
+features_list = ["salary"]
+exercised_stock_options = featureFormat(data_dict, features_list )
+import numpy as np
+print "Max salary", np.max(exercised_stock_options)
+print "Min salary", np.min(exercised_stock_options)
 
 ### rename the "name" parameter when you change the number of features
 ### so that the figure gets saved to a different file
